@@ -1,23 +1,36 @@
 package com.mustafabora.accounting.service;
 
+import com.mustafabora.accounting.dto.UserDto;
+import com.mustafabora.accounting.model.User;
+import com.mustafabora.accounting.repository.UserRepository;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+import java.math.BigDecimal;
+
+@RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
 
-//    @Mock
-//    AccountService accountService;
+    @Mock
+    UserRepository repository;
 
     @InjectMocks
-    UserService userService;
+    UserService service;
 
     @Test
-    public void shouldReturnNullWhenNotInitialized() {
-        Assertions.assertNull( userService.get("customerID"));
+    public void shouldSave() {
+        UserDto userDto = new UserDto("10", BigDecimal.TEN);
+        User user = new User("10", BigDecimal.TEN, null, null, null);
+        Mockito.when(repository.createUserIfNotExist(userDto))
+                .thenReturn(user);
+        User save = service.save(userDto);
+        Assertions.assertEquals(user.getCustomerID(), userDto.getCustomerID());
+        Assertions.assertEquals(user.getInitialCredit(), userDto.getInitialCredit());
     }
-
 
 }
