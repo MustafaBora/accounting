@@ -1,23 +1,19 @@
 package com.mustafabora.accounting.service;
 
-import com.mustafabora.accounting.model.Account;
+import com.mustafabora.accounting.repository.AccountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 @Service
 @AllArgsConstructor
 public class AccountService {
 
-    Map<String, Account> accountMap;
+    private final AccountRepository accountRepository;
 
-    public void save(String customerID) {
-        this.accountMap.put(customerID, new Account(customerID, BigDecimal.ZERO));
+    public void save(String customerID, BigDecimal initialCredit) {
+        this.accountRepository.save(customerID, initialCredit);
     }
 
-    public void setBalance(String customerID, BigDecimal initialCredit) {
-        accountMap.put(customerID, new Account(customerID, initialCredit));
-    }
 }

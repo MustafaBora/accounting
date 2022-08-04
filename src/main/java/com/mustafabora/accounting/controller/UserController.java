@@ -1,20 +1,31 @@
 package com.mustafabora.accounting.controller;
 
-import com.mustafabora.accounting.model.User;
+import com.mustafabora.accounting.dto.UserDto;
+import com.mustafabora.accounting.service.AccountService;
+import com.mustafabora.accounting.service.TransactionsService;
 import com.mustafabora.accounting.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("api/v1/userinformation")
+@RequestMapping("api/v1/user")
 @AllArgsConstructor
 public class UserController {
 
-    UserService service;
+    UserService userService;
+    AccountService accountService;
+    TransactionsService transactionsService;
 
     @PostMapping()
-    public void save(@RequestBody User user) {
-        service.save(user);
-    }   //customerID and initialCredit comes
+    public String save(@RequestBody UserDto user) {
+
+        userService.save(user);
+
+        accountService.save(user.getCustomerID(), user.getInitialCredit());
+        return user.getCustomerID();
+        //money issues using transactionsService in the future.
+
+    }
+
 }

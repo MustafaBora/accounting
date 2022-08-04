@@ -1,15 +1,16 @@
 package com.mustafabora.accounting.model;
 
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Setter
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 public class User {
 
     String customerID;
