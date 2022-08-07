@@ -1,6 +1,7 @@
 package com.mustafabora.accounting.controller;
 
 import com.mustafabora.accounting.dto.UserDto;
+import com.mustafabora.accounting.model.User;
 import com.mustafabora.accounting.service.AccountService;
 import com.mustafabora.accounting.service.TransactionsService;
 import com.mustafabora.accounting.service.UserService;
@@ -18,11 +19,12 @@ public class UserController {
     TransactionsService transactionsService;
 
     @PostMapping()
-    public String save(@RequestBody UserDto user) {
+    public String save(@RequestBody UserDto userDto) {
 
-        userService.save(user);
+        User user = userService.getByCustomerId(userDto.getCustomerID());
 
         accountService.save(user.getCustomerID(), user.getInitialCredit());
+
         return user.getCustomerID();
         //money issues using transactionsService in the future.
 

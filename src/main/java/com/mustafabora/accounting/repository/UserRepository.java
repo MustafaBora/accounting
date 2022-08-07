@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class UserRepository {
@@ -22,10 +23,11 @@ public class UserRepository {
         userMap.put("4CGM", new User("4CGM", BigDecimal.ZERO, "Baran", "Simsek", BigDecimal.ZERO) );
     }
 
-    public User getUserByCustomerId(String customerID) {
-        return userMap.get(customerID);
+    public Optional<User> getUserByCustomerId(String customerID) {
+        return Optional.ofNullable(userMap.get(customerID));
     }
 
+    @Deprecated
     public User createUserIfNotExist(UserDto userDto) {
         if(userMap.get(userDto.getCustomerID()) == null)
             userMap.put(userDto.getCustomerID(), new User(userDto.getCustomerID(), userDto.getInitialCredit(), "", "", userDto.getInitialCredit()));
