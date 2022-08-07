@@ -18,16 +18,13 @@ public class UserRepositoryTest {
     @Spy
     UserRepository userRepository;
 
-    @Spy
-    UserRepository userService;
-
     public UserRepositoryTest() {}
 
     @Test
     public void shouldReturnWithSameValues() {
         Assertions.assertEquals(
             new User("1BIL", BigDecimal.ZERO, "Mustafa Bora", "Simsek", BigDecimal.ZERO),
-                userRepository.getUserByCustomerId("1BIL").get()
+                userRepository.getUserByCustomerId("1BIL").orElse(null)
         );
     }
 
