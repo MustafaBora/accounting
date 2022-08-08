@@ -5,13 +5,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
-public class Account {
+public class Transaction {
 
-    private String accountId;
-    private String customerID;
-    private BigDecimal balance;
+    String transactionId;
+    String accountId;
+    LocalDateTime time;
+    BigDecimal value;
+
 }
