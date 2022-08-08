@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 
@@ -19,7 +18,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserControllerTest {
+public class AccountControllerTest {
 
     @Mock
     UserService userService;
@@ -28,7 +27,7 @@ public class UserControllerTest {
     AccountService accountService;
 
     @InjectMocks
-    UserController userController;
+    AccountController accountController;
 
     private final String existentCustomerId = "1BIL";
     private final UserDto existentUserDto = new UserDto(existentCustomerId, BigDecimal.ZERO);
@@ -38,18 +37,16 @@ public class UserControllerTest {
     private final UserDto nonExistentUserDto = new UserDto(nonExistentCustomerId, BigDecimal.ZERO);
 
     @Test
-    public void shouldReturnCustomerIdWhenSuccess() {
+    public void shouldReturnAccountIdWhenSuccess() {
         when(userService.getByCustomerId(anyString()))
                 .thenReturn(existentUser);
-        Assertions.assertEquals(
-                existentCustomerId,
-                userController.save(existentUserDto));
+        Assertions.assertNotNull(accountController.save(existentUserDto));
     }
 
     @Test(expected = CustomerNotFoundException.class)
     public void shouldReturnNotFoundWhenFail() {
         when(userService.getByCustomerId(nonExistentCustomerId))
                 .thenThrow(new CustomerNotFoundException("Iron Man doesn't exist"));
-        userController.save(nonExistentUserDto);
+        accountController.save(nonExistentUserDto);
     }
 }
