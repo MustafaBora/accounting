@@ -1,6 +1,9 @@
 package com.mustafabora.accounting.repository;
 
 import com.mustafabora.accounting.dto.AccountDTO;
+import com.mustafabora.accounting.dto.AccountInfo;
+import com.mustafabora.accounting.exception.AccountNotFoundException;
+import com.mustafabora.accounting.exception.CustomerNotFoundException;
 import com.mustafabora.accounting.model.Account;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +19,7 @@ public class AccountRepository {
 
     Map<String, List<Account>> accountMap = new HashMap<>();    //accounts by customerId
     private final int sequenceIncrease = 1;
-    private int sequence = 5;   //can be volatile
+    private int sequence = 5;
 
     AccountRepository() {
         initAccounts();
@@ -57,7 +60,16 @@ public class AccountRepository {
     }
 
     public List<String> getAccountIdsByCustomerId(String customerId) {
+        if(!this.accountMap.containsKey(customerId)) throw new CustomerNotFoundException(customerId);
         return this.accountMap.get(customerId).stream().map(Account::getAccountId).collect(Collectors.toList());
     }
 
+    public Account getByAccountId(String accountId) {
+        if(accountId == null) return null;
+        List<Account> uniqueAccount = this.accountMap.values().stream().flatMap(acc -> acc.stream())
+                .filter(account -> accountId.equals(account.getAccountId())).collect(Collectors.toList());
+        if(uniqueAccount.size() > 1) throw new RuntimeException("Duplicate Account Id" + accountId);
+        if(uniqueAccount.size() == 1) return uniqueAccount.get(0);
+        else throw new AccountNotFoundException(accountId);
+    }
 }

@@ -13,7 +13,7 @@ import java.util.Optional;
 public class UserRepository {
 
 
-    private final Map<String, User> userMap = new HashMap<>();
+    private final Map<String, User> userMap = new HashMap<>();  //customerId and User map
 
     public UserRepository() {
         //create initial users

@@ -1,6 +1,7 @@
 package com.mustafabora.accounting.service;
 
 import com.mustafabora.accounting.dto.AccountDTO;
+import com.mustafabora.accounting.dto.AccountInfo;
 import com.mustafabora.accounting.model.Account;
 import com.mustafabora.accounting.repository.AccountRepository;
 import lombok.AllArgsConstructor;
@@ -17,18 +18,18 @@ import java.util.List;
 @AllArgsConstructor
 public class AccountService {
 
-    private final AccountRepository accountRepository;
+    private final AccountRepository repository;
 
     public Account save(String customerID, BigDecimal initialCredit) {
-        return this.accountRepository.save(customerID, initialCredit);
+        return this.repository.save(customerID, initialCredit);
     }
 
     public List<Account> getByCustomerId(String customerId) {
-        return accountRepository.getByCustomerId(customerId);
+        return repository.getByCustomerId(customerId);
     }
 
     public List<String> getAccountIdsByCustomerId(String customerId) {
-        return accountRepository.getAccountIdsByCustomerId(customerId);
+        return repository.getAccountIdsByCustomerId(customerId);
     }
 
     /**
@@ -48,8 +49,12 @@ public class AccountService {
 
         HttpEntity<AccountDTO> request = new HttpEntity<>(accountDTO, headers);
 
-        String transactionId = restTemplate.postForObject("http://localhost:8080/api/v1/transaction", request, String.class);
+        String transactionId = restTemplate.postForObject("http://localhost:8080/api/v1/transaction/firstTransactionToAccount", request, String.class);
 
         return transactionId;
+    }
+
+    public Account getByAccountId(String accountId) {
+        return repository.getByAccountId(accountId);
     }
 }
