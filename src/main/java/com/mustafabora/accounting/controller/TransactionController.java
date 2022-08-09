@@ -1,12 +1,14 @@
 package com.mustafabora.accounting.controller;
 
 import com.mustafabora.accounting.dto.AccountDTO;
+import com.mustafabora.accounting.dto.TransactionDTO;
 import com.mustafabora.accounting.model.Transaction;
 import com.mustafabora.accounting.service.TransactionService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/transaction")
@@ -20,9 +22,22 @@ public class TransactionController {
         return service.save(accountDTO);
     }
 
-    @GetMapping(value = "/transactions/{customerId}")
-    public List<Transaction> listTransactions(@PathVariable String customerId) {
-        return service.listTransactions(customerId);
+    @PostMapping(value = "/firstTransactionToAccount")
+    public String saveFirstTransactionToNewAccount(@RequestBody AccountDTO accountDTO) {
+        return service.saveFirstTransactionToNewAccount(accountDTO);
+    }
+
+    @GetMapping(value = "/transactionsByCustomerId/{customerId}")
+    public List<TransactionDTO> getTransactionsByCustomerId(@PathVariable String customerId) {
+        return service.convertToDTO(
+                service.getTransactionsByCustomerId(customerId) );
+    }
+
+    @GetMapping(value = "/transactionsByAccountId/{accountId}")
+    public List<TransactionDTO> getTransactionsByAccountId(@PathVariable String accountId) {
+        return service.convertToDTO(
+                service.getTransactionsByAccountId(accountId)
+        );
     }
 
     @GetMapping

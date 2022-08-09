@@ -1,18 +1,18 @@
 package com.mustafabora.accounting.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Data
-@Builder
+@AllArgsConstructor
+@Setter
+@Getter
 public class OutputDTO {
     String customerID;
     BigDecimal initialCredit;
     String name;
     String surname;
-    BigDecimal balance;
-    List<TransactionDTO> transactionDTOList;
+    List<AccountInfo> accounts;
 }
+

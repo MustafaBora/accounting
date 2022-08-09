@@ -1,13 +1,14 @@
 package com.mustafabora.accounting.dto;
 
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
+@AllArgsConstructor
+@Getter
+@Setter
 public class TransactionDTO {
-// is it needed because it's the same as Transaction
     String transactionId;
     String accountId;
     LocalDateTime time;
