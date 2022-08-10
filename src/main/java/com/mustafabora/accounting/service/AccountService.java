@@ -34,6 +34,7 @@ public class AccountService {
 
     /**
      * introduces a transaction to given account via HTTP call
+     * @return transaction id
      */
     public String firstTransaction(Account acc, BigDecimal initialCredit) {
 
@@ -49,9 +50,8 @@ public class AccountService {
 
         HttpEntity<AccountDTO> request = new HttpEntity<>(accountDTO, headers);
 
-        String transactionId = restTemplate.postForObject("http://localhost:8080/api/v1/transaction/firstTransactionToAccount", request, String.class);
+        return restTemplate.postForObject("http://localhost:8081/api/v1/transaction/firstTransactionToAccount", request, String.class);
 
-        return transactionId;
     }
 
     public Account getByAccountId(String accountId) {

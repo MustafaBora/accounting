@@ -5,14 +5,15 @@ import com.mustafabora.accounting.dto.TransactionDTO;
 import com.mustafabora.accounting.model.Transaction;
 import com.mustafabora.accounting.service.TransactionService;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/transaction")
 @AllArgsConstructor
+@Profile("transactions")
 public class TransactionController {
 
     TransactionService service;

@@ -6,16 +6,17 @@ import com.mustafabora.accounting.model.User;
 import com.mustafabora.accounting.service.AccountService;
 import com.mustafabora.accounting.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("api/v1/account")
 @AllArgsConstructor
+@Profile("accounting")
 public class AccountController {
 
     UserService userService;
@@ -51,7 +52,7 @@ public class AccountController {
         for (Account account : accounts) {
             List<TransactionDTO> transactionList =
                     restTemplate.getForObject(
-                            "http://localhost:8080/api/v1/transaction/transactionsByAccountId/" + account.getAccountId(),
+                            "http://localhost:8081/api/v1/transaction/transactionsByAccountId/" + account.getAccountId(),
                             List.class);
             AccountInfo accountInfo = new AccountInfo(customerId, account.getAccountId(), account.getBalance(), transactionList);
             outputDTO.getAccounts().add(accountInfo);
