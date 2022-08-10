@@ -15,12 +15,24 @@ public class TransactionRepository {
 
     private Map<String, List<Transaction>> transactions = new HashMap<>();    //transactions by accountId
     private final int sequenceIncrease = 10;
-    private int transactionsSequence = 1000;
+    private int transactionsSequence = 1030;
 
     TransactionRepository() {
         List<Transaction> bil1Transactions = new ArrayList<>();
         bil1Transactions.add(new Transaction("1000", "1", LocalDateTime.now(), BigDecimal.ZERO));
         transactions.put("1", bil1Transactions);
+
+        List<Transaction> cyb2Transactions = new ArrayList<>();
+        cyb2Transactions.add(new Transaction("1010", "2", LocalDateTime.now(), BigDecimal.TEN));
+        transactions.put("1", cyb2Transactions);
+
+        List<Transaction> hvl3Transactions = new ArrayList<>();
+        hvl3Transactions.add(new Transaction("1020", "3", LocalDateTime.now(), BigDecimal.ONE));
+        transactions.put("1", hvl3Transactions);
+
+        List<Transaction> cpg4Transactions = new ArrayList<>();
+        cpg4Transactions.add(new Transaction("1030", "4", LocalDateTime.now(), BigDecimal.ZERO));
+        transactions.put("1", cpg4Transactions);
     }
 
     public String save(AccountDTO accountDTO) {
@@ -66,7 +78,7 @@ public class TransactionRepository {
     }
 
     public List<Transaction> getTransactionsByAccountId(String accountId) {
-        return transactions.computeIfAbsent(accountId, k -> new ArrayList<>());
+        return transactions.get(accountId);
 
     }
 }

@@ -13,6 +13,6 @@ public class OutputDTO {
     BigDecimal initialCredit;
     String name;
     String surname;
-    List<AccountInfo> accounts;
+    List<AccountInfo> accountInfos;
 }
 

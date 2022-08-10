@@ -2,11 +2,12 @@ package com.mustafabora.accounting.service;
 
 import com.mustafabora.accounting.dto.AccountDTO;
 import com.mustafabora.accounting.dto.TransactionDTO;
-import com.mustafabora.accounting.exception.AccountNotFoundException;
+import com.mustafabora.accounting.exception.AccountServiceNotUpException;
 import com.mustafabora.accounting.exception.CustomerNotFoundException;
 import com.mustafabora.accounting.model.Transaction;
 import com.mustafabora.accounting.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -34,10 +35,16 @@ public class TransactionService {
     public List<Transaction> getTransactionsByCustomerId(String customerId) {
 
         RestTemplate restTemplate = new RestTemplate();
+        List<String> accountIdlist;
+        try {
+            accountIdlist = restTemplate.getForObject("http://localhost:8090/api/v1/account/accountIds/" + customerId, List.class);
+            if(accountIdlist == null) throw new CustomerNotFoundException(customerId + " doesn't have any account! " + customerId);
+            return repository.listTransactions(accountIdlist);
+        }
+        catch (RestClientException connectException) {
+            throw new AccountServiceNotUpException("Account service unreachable while getting account numbers of " + customerId);
+        }
 
-        List<String> accountIdlist = restTemplate.getForObject("http://localhost:8080/api/v1/account/accountIds/" + customerId, List.class);
-        if(accountIdlist == null) throw new CustomerNotFoundException(customerId + " doesn't have any account! " + customerId);
-        return repository.listTransactions(accountIdlist);
     }
 
     public List<Transaction> getAllTransactions() {
