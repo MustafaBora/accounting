@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * To activate, use spring.profiles.active=transactions
+ */
 @RestController
 @RequestMapping("/api/v1/transaction")
 @AllArgsConstructor

@@ -19,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AccountService {
 
+    private static final String FIRST_TRANSACTION_TO_ACCOUNT = "http://localhost:8081/api/v1/transaction/firstTransactionToAccount";
     private final AccountRepository repository;
 
     public Account save(String customerID, BigDecimal initialCredit) {
@@ -60,7 +61,7 @@ public class AccountService {
 
         HttpEntity<AccountDTO> request = new HttpEntity<>(accountDTO, headers);
 
-        newTransactionId = restTemplate.postForObject("http://localhost:8081/api/v1/transaction/firstTransactionToAccount", request, String.class);
+        newTransactionId = restTemplate.postForObject(FIRST_TRANSACTION_TO_ACCOUNT, request, String.class);
         return newTransactionId;
     }
 

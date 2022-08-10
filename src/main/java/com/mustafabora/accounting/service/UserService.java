@@ -21,6 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserService {
 
+    private static final String TRANSACTIONS_BY_ACCOUNT_ID = "http://localhost:8081/api/v1/transaction/transactionsByAccountId/";
     private final UserRepository userRepository;
 
     @Deprecated
@@ -41,7 +42,7 @@ public class UserService {
             try {
                 List<TransactionDTO> transactionList =
                         restTemplate.getForObject(
-                                "http://localhost:8081/api/v1/transaction/transactionsByAccountId/" + account.getAccountId(),
+                                TRANSACTIONS_BY_ACCOUNT_ID + account.getAccountId(),
                                 List.class);
                 AccountInfo accountInfo = new AccountInfo(user.getCustomerID(),
                         account.getAccountId(), account.getBalance(), transactionList);
