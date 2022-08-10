@@ -1,7 +1,7 @@
 package com.mustafabora.accounting.service;
 
 import com.mustafabora.accounting.dto.AccountDTO;
-import com.mustafabora.accounting.dto.AccountInfo;
+import com.mustafabora.accounting.exception.TransactionServiceNotUpException;
 import com.mustafabora.accounting.model.Account;
 import com.mustafabora.accounting.repository.AccountRepository;
 import lombok.AllArgsConstructor;
@@ -9,6 +9,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -36,13 +37,22 @@ public class AccountService {
      * introduces a transaction to given account via HTTP call
      * @return transaction id
      */
-    public String firstTransaction(Account acc, BigDecimal initialCredit) {
+    public String firstTransaction(Account acc, BigDecimal initialCredit) throws RestClientException {
+        String newTransactionId;
+        try {
+            newTransactionId = callForCreateNewTransaction(acc, initialCredit);
 
+        } catch (RestClientException restClientException) {
+            throw new TransactionServiceNotUpException("Could not send first transaction!");
+        }
+        return newTransactionId;
+    }
+
+    private String callForCreateNewTransaction(Account acc, BigDecimal initialCredit) {
+        String newTransactionId;
         RestTemplate restTemplate = new RestTemplate();
 
-        // Create the request body as a MultiValueMap
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-
         headers.add("user-agent", "Application");
 
         //balance is also transaction value because there is only 1 transaction
@@ -50,8 +60,8 @@ public class AccountService {
 
         HttpEntity<AccountDTO> request = new HttpEntity<>(accountDTO, headers);
 
-        return restTemplate.postForObject("http://localhost:8081/api/v1/transaction/firstTransactionToAccount", request, String.class);
-
+        newTransactionId = restTemplate.postForObject("http://localhost:8081/api/v1/transaction/firstTransactionToAccount", request, String.class);
+        return newTransactionId;
     }
 
     public Account getByAccountId(String accountId) {

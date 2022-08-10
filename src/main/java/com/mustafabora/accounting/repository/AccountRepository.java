@@ -29,11 +29,11 @@ public class AccountRepository {
         ArrayList<Account> bil1 = new ArrayList<>();
         bil1.add(new Account("1", "1BIL", BigDecimal.ZERO));
         ArrayList<Account> cyb2 = new ArrayList<>();
-        cyb2.add(new Account("2", "2CYB", BigDecimal.ZERO));
+        cyb2.add(new Account("2", "2CYB", BigDecimal.TEN));
         ArrayList<Account> hvl3 = new ArrayList<>();
-        hvl3.add(new Account("3", "3HVL", BigDecimal.ZERO));
+        hvl3.add(new Account("3", "3HVL", BigDecimal.ONE));
         ArrayList<Account> cpg4 = new ArrayList<>();
-        cpg4.add(new Account("4", "4CGM", BigDecimal.ZERO));
+        cpg4.add(new Account("4", "4CPG", BigDecimal.ZERO));
         accountMap.put("1BIL", bil1);
         accountMap.put("2CYB", cyb2);
         accountMap.put("3HVL", hvl3);

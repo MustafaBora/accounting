@@ -23,6 +23,9 @@ public class TransactionController {
         return service.save(accountDTO);
     }
 
+    /**
+     * @return new transaction ID
+     */
     @PostMapping(value = "/firstTransactionToAccount")
     public String saveFirstTransactionToNewAccount(@RequestBody AccountDTO accountDTO) {
         return service.saveFirstTransactionToNewAccount(accountDTO);
