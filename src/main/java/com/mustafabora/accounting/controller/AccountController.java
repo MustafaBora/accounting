@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ *  accounting profile is the default active profile
+ */
 @RestController
 @RequestMapping("api/v1/account")
 @AllArgsConstructor
@@ -52,7 +55,5 @@ public class AccountController {
     public List<String> getAccountIds(@PathVariable String customerId) {
         return accountService.getAccountIdsByCustomerId(customerId);
     }
-
-
 
 }

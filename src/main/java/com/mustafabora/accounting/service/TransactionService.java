@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 @Service
 public class TransactionService {
 
+    private static final String ACCOUNT_IDS = "http://localhost:8090/api/v1/account/accountIds/";
+
     TransactionRepository repository;
 
     public TransactionService(TransactionRepository repository) {
@@ -37,7 +39,7 @@ public class TransactionService {
         RestTemplate restTemplate = new RestTemplate();
         List<String> accountIdlist;
         try {
-            accountIdlist = restTemplate.getForObject("http://localhost:8090/api/v1/account/accountIds/" + customerId, List.class);
+            accountIdlist = restTemplate.getForObject(ACCOUNT_IDS + customerId, List.class);
             if(accountIdlist == null) throw new CustomerNotFoundException(customerId + " doesn't have any account! " + customerId);
             return repository.listTransactions(accountIdlist);
         }
