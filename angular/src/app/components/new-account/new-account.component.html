@@ -1,0 +1,15 @@
+
+<div class="grid p-fluid" style="padding:20px">
+
+    <form [formGroup]="newAccountForm" (ngSubmit)="save()">
+        <div>
+            <label for="customerID">Customer ID</label>
+            <input id="customerID" type="text" formControlName="customerID" pInputText> 
+            <br>
+            <label for="initialCredit">Initial Credit</label>
+            <input id="initialCredit" type="text" formControlName="initialCredit" pInputText> 
+        </div>
+        <button pButton>New Account</button>
+    </form>
+
+</div>
