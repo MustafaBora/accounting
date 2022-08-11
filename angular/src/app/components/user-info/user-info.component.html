@@ -1,0 +1,24 @@
+<p-table [value]="userInfo" styleClass="p-datatable-gridlines" responsiveLayout="scroll">
+    <ng-template pTemplate="caption">
+        User Information
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Balance</th>
+            <th>Accounts</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+        <tr>
+            <td>{{customer.name}}</td>
+            <td>{{customer.surname}}</td>
+            <td>{{customer.initialCredit}}</td>
+            <td>{{customer.accountInfos[0].transactionDTOList[0] | json}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        Footer
+    </ng-template>
+</p-table>

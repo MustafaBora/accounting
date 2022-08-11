@@ -19,6 +19,7 @@ import java.util.List;
 @RequestMapping("api/v1/account")
 @AllArgsConstructor
 @Profile("accounting")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AccountController {
 
     UserService userService;
