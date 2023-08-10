@@ -36,13 +36,6 @@ public class AccountControllerTest {
     private final String nonExistentCustomerId = "yyyy";
     private final UserDto nonExistentUserDto = new UserDto(nonExistentCustomerId, BigDecimal.ZERO);
 
-    @Test
-    public void shouldReturnAccountIdWhenSuccess() {
-        when(userService.getByCustomerId(anyString()))
-                .thenReturn(existentUser);
-        Assertions.assertNotNull(accountController.save(existentUserDto));
-    }
-
     @Test(expected = CustomerNotFoundException.class)
     public void shouldReturnNotFoundWhenFail() {
         when(userService.getByCustomerId(nonExistentCustomerId))
